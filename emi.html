@@ -9,12 +9,12 @@
 <body>
   <div class="navbar">
     <h2>Snapmint EMI Calculator</h2>
-    <button id="logoutBtn">Logout</button>
+    <button id="logoutBtn" onclick="logout()">Logout</button>
   </div>
 
   <div class="card">
     <h1>Loan EMI Calculator</h1>
-    <form id="emiForm">
+    <form id="emiForm" onsubmit="event.preventDefault(); calculateEMI();">
       <label for="price">Loan Amount (₹):</label>
       <input type="number" id="price" required />
 
@@ -30,41 +30,26 @@
     <div id="result"></div>
   </div>
 
+  <script src="script.js"></script>
   <script>
-    const emiForm = document.getElementById("emiForm");
-    const resultBox = document.getElementById("result");
-
-    emiForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const price = document.getElementById("price").value;
-      const rate = document.getElementById("rate").value;
-      const months = document.getElementById("months").value;
-
+    // Redirect to login if user is not authenticated
+    async function checkAuth() {
       try {
         const res = await fetch("http://127.0.0.1:5000/calculate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ price, rate, months }),
+          body: JSON.stringify({ price: 0, rate: 0, months: 0 }),
+          credentials: "include"
         });
-        const data = await res.json();
-
-        if (data.error) {
-          resultBox.innerText = `⚠️ ${data.error}`;
-        } else {
-          resultBox.innerText = `💰 Monthly EMI: ₹${data.emi} | Total Payable: ₹${data.total}`;
+        if (res.status === 401) {
+          window.location.href = "login.html";
         }
-
-        resultBox.classList.add("visible");
       } catch (err) {
-        resultBox.innerText = "Error connecting to the server!";
-        resultBox.classList.add("visible");
+        console.error("Error checking auth:", err);
+        window.location.href = "login.html";
       }
-    });
-
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-      localStorage.removeItem("loggedIn");
-      window.location.href = "login.html";
-    });
+    }
+    checkAuth();
   </script>
 </body>
 </html>
