@@ -9,13 +9,12 @@ async function login() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
-      credentials: "include" // important for session cookies
+      credentials: "include"
     });
 
     const data = await res.json();
 
     if (!res.ok) {
-      // Show proper error message from server
       messageBox.innerText = "❌ " + (data.error || "Invalid username or password!");
       return;
     }
@@ -69,8 +68,7 @@ async function calculateEMI() {
 
     if (!res.ok) {
       if (res.status === 401) {
-        // Not logged in
-        window.location.href = "login.html";
+        window.location.href = "login.html"; // redirect if not logged in
       } else {
         resultBox.innerText = "⚠️ " + (data.error || "Invalid input!");
       }
@@ -78,7 +76,6 @@ async function calculateEMI() {
       return;
     }
 
-    // Success
     resultBox.innerText = `💰 Monthly EMI: ₹${data.emi} | Total Payable: ₹${data.total}`;
     resultBox.classList.add("visible");
 

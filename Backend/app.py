@@ -3,10 +3,12 @@ from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-CORS(app)
-app.secret_key = "supersecretkey"  # required for session
+app.secret_key = "supersecretkey"
 
-# Serve static files (your HTML/CSS/JS)
+# CORS setup to allow credentials (cookies)
+CORS(app, supports_credentials=True)
+
+# Serve static files
 @app.route('/')
 def index():
     return send_from_directory('static', 'index.html')
@@ -15,27 +17,27 @@ def index():
 def static_files(filename):
     return send_from_directory('static', filename)
 
-# --- Login endpoint ---
+# --- Login ---
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
 
-    # Simple demo authentication
+    # Demo credentials
     if username == "admin" and password == "password123":
         session['logged_in'] = True
         return jsonify({"success": True})
     else:
-        return jsonify({"success": False, "error": "❌ Invalid username or password!"}), 401
+        return jsonify({"success": False, "error": "Invalid username or password"}), 401
 
-# --- Logout endpoint ---
+# --- Logout ---
 @app.route('/logout', methods=['POST'])
 def logout():
     session.pop('logged_in', None)
     return jsonify({"success": True})
 
-# --- EMI calculation endpoint ---
+# --- EMI calculation ---
 @app.route('/calculate', methods=['POST'])
 def calculate():
     if not session.get('logged_in'):
@@ -56,9 +58,10 @@ def calculate():
         emi = (P * R * (1 + R)**N) / ((1 + R)**N - 1)
         total = emi * N
 
-        return jsonify({"emi": round(emi,2), "total": round(total,2)})
+        return jsonify({"emi": round(emi, 2), "total": round(total, 2)})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)
