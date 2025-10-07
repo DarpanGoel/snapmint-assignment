@@ -7,7 +7,7 @@ function login() {
     localStorage.setItem("loggedIn", "true");
     window.location.href = "emi.html";
   } else {
-    document.getElementById("message").innerText = "Invalid credentials!";
+    document.getElementById("message").innerText = "❌ Invalid username or password!";
   }
 }
 
