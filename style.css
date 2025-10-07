@@ -1,35 +1,162 @@
+/* 🌿 Snapmint Global Styles */
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f7fa;
+  font-family: "Poppins", Arial, sans-serif;
+  background-color: #f8fff1;
   text-align: center;
   margin: 0;
-  padding: 50px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
-.container {
+/* Reusable card container */
+.container, .card {
   background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   padding: 40px;
   max-width: 400px;
-  margin: 0 auto;
+  width: 90%;
+  margin: 20px auto;
+  border-top: 5px solid #bfff00;
 }
 
-.button-group {
-  margin-top: 20px;
+/* Typography */
+h1 {
+  color: #7fbf00;
+  font-size: 26px;
+  margin-bottom: 10px;
+  font-weight: 700;
 }
 
+h2 {
+  color: #7fbf00;
+  font-weight: 600;
+}
+
+p {
+  color: #333;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+/* Buttons */
 button {
-  background-color: #007bff;
-  color: white;
+  background-color: #a8e800;
+  color: #1a1a1a;
   border: none;
-  padding: 10px 20px;
-  margin: 10px;
-  border-radius: 5px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  width: 100%;
+  max-width: 260px;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #9dd800;
+  transform: translateY(-1px);
+}
+
+/* Form Elements */
+label {
+  display: block;
+  text-align: left;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+input:focus {
+  border-color: #a8e800;
+}
+
+/* Result Box */
+#result {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  background: #f4ffe1;
+  border: 1px solid #cfff70;
+  border-radius: 8px;
+  padding: 12px;
+  display: none;
+}
+
+#result.visible {
+  display: block;
+  animation: fadeIn 0.3s ease-in;
+}
+
+/* Navbar (used on EMI page) */
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #bfff00;
+  color: #1a1a1a;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.navbar h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.navbar button {
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.navbar button:hover {
+  background: #333;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Footer */
+footer {
+  position: absolute;
+  bottom: 15px;
+  font-size: 13px;
+  color: #666;
+}
+
+footer span {
+  color: #7fbf00;
+  font-weight: 600;
 }
