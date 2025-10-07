@@ -13,7 +13,8 @@
       Login to access your <span class="brand">Snapmint</span> EMI Calculator
     </p>
 
-    <form id="loginForm">
+    <!-- Login form calls login() from script.js -->
+    <form id="loginForm" onsubmit="event.preventDefault(); login();">
       <label for="username">Username:</label>
       <input type="text" id="username" required />
 
@@ -28,23 +29,7 @@
 
   <footer>Powered by <span>Snapmint Assignment</span></footer>
 
-  <script>
-    const loginForm = document.getElementById("loginForm");
-    const messageBox = document.getElementById("message");
-
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-
-      // Simple demo login check
-      if (username === "admin" && password === "admin") {
-        localStorage.setItem("loggedIn", true);
-        window.location.href = "emi.html";
-      } else {
-        messageBox.innerText = "❌ Invalid username or password!";
-      }
-    });
-  </script>
+  <!-- External JS for login, logout, and EMI -->
+  <script src="script.js"></script>
 </body>
 </html>
