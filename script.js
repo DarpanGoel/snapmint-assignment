@@ -1,87 +1,46 @@
-// --- Login ---
-async function login() {
+// --- Login logic ---
+function login() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
-  const messageBox = document.getElementById("message");
 
-  try {
-    const res = await fetch("http://127.0.0.1:5000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-      credentials: "include"
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      messageBox.innerText = "❌ " + (data.error || "Invalid username or password!");
-      return;
-    }
-
-    if (data.success) {
-      window.location.href = "emi.html";
-    } else {
-      messageBox.innerText = "❌ " + (data.error || "Invalid username or password!");
-    }
-  } catch (err) {
-    console.error("Login error:", err);
-    messageBox.innerText = "❌ Server error!";
+  if (username === "admin" && password === "password123") {
+    localStorage.setItem("loggedIn", "true");
+    window.location.href = "emi.html";
+  } else {
+    document.getElementById("message").innerText = "❌ Invalid username or password!";
   }
 }
 
-// --- Logout ---
-async function logout() {
-  try {
-    const res = await fetch("http://127.0.0.1:5000/logout", {
-      method: "POST",
-      credentials: "include"
-    });
-
-    if (res.ok) {
-      window.location.href = "login.html";
-    } else {
-      alert("Logout failed!");
-    }
-  } catch (err) {
-    console.error("Logout error:", err);
-    alert("Server error during logout!");
+// --- Redirect unauthenticated users ---
+if (window.location.pathname.endsWith("emi.html")) {
+  if (!localStorage.getItem("loggedIn")) {
+    window.location.href = "login.html";
   }
 }
 
-// --- EMI Calculation ---
+// --- Logout logic ---
+function logout() {
+  localStorage.removeItem("loggedIn");
+  window.location.href = "login.html";
+}
+
+// --- EMI Calculation via Flask API ---
 async function calculateEMI() {
   const price = document.getElementById("price").value;
   const rate = document.getElementById("rate").value;
   const months = document.getElementById("months").value;
-  const resultBox = document.getElementById("result");
 
-  try {
-    const res = await fetch("http://127.0.0.1:5000/calculate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ price, rate, months })
-    });
+  const res = await fetch("http://127.0.0.1:5000/calculate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ price, rate, months }),
+  });
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      if (res.status === 401) {
-        window.location.href = "login.html"; // redirect if not logged in
-      } else {
-        resultBox.innerText = "⚠️ " + (data.error || "Invalid input!");
-      }
-      resultBox.classList.add("visible");
-      return;
-    }
-
-    resultBox.innerText = `💰 Monthly EMI: ₹${data.emi} | Total Payable: ₹${data.total}`;
-    resultBox.classList.add("visible");
-
-  } catch (err) {
-    console.error("EMI calculation error:", err);
-    resultBox.innerText = "⚠️ Server error!";
-    resultBox.classList.add("visible");
+  const data = await res.json();
+  if (data.error) {
+    document.getElementById("result").innerText = data.error;
+  } else {
+    document.getElementById("result").innerText =
+      `Monthly EMI: ₹${data.emi} | Total Payable: ₹${data.total}`;
   }
 }

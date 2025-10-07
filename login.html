@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login | Snapmint</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="card">
@@ -13,11 +13,14 @@
       Login to access your <span class="brand">Snapmint</span> EMI Calculator
     </p>
 
+    <!-- Login form calls login() from script.js -->
     <form id="loginForm" onsubmit="event.preventDefault(); login();">
       <label for="username">Username:</label>
-      <input type="text" id="username" required>
+      <input type="text" id="username" required />
+
       <label for="password">Password:</label>
-      <input type="password" id="password" required>
+      <input type="password" id="password" required />
+
       <button type="submit">Login</button>
     </form>
 
@@ -25,6 +28,8 @@
   </div>
 
   <footer>Powered by <span>Snapmint Assignment</span></footer>
+
+  <!-- External JS for login, logout, and EMI -->
   <script src="script.js"></script>
 </body>
 </html>
