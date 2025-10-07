@@ -1,4 +1,4 @@
-# 💚 Snapmint Assignment
+# Snapmint Assignment
 
 A simple front-end + Flask-based EMI Calculator application that demonstrates:
 - Login authentication
