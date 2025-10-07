@@ -3,22 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Snapmint Login</title>
+  <title>Login - Snapmint Assignment</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <div class="container">
-    <h1>Snapmint Login</h1>
+    <h1>Login</h1>
+    <form onsubmit="event.preventDefault(); login();">
+      <label for="username">Username:</label>
+      <input type="text" id="username" required />
 
-    <label>Username</label>
-    <input type="text" id="username" placeholder="Enter username" />
+      <label for="password">Password:</label>
+      <input type="password" id="password" required />
 
-    <label>Password</label>
-    <input type="password" id="password" placeholder="Enter password" />
-
-    <button onclick="login()">Login</button>
-
-    <h2 id="message"></h2>
+      <button type="submit">Login</button>
+    </form>
+    <p id="message"></p>
   </div>
 
   <script src="script.js"></script>

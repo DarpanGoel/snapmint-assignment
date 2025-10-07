@@ -5,17 +5,23 @@ function login() {
 
   if (username === "admin" && password === "password123") {
     localStorage.setItem("loggedIn", "true");
-    window.location.href = "index.html";
+    window.location.href = "emi.html";
   } else {
     document.getElementById("message").innerText = "Invalid credentials!";
   }
 }
 
-// --- Check login on page load ---
-if (window.location.pathname.endsWith("index.html")) {
+// --- Redirect unauthenticated users ---
+if (window.location.pathname.endsWith("emi.html")) {
   if (!localStorage.getItem("loggedIn")) {
     window.location.href = "login.html";
   }
+}
+
+// --- Logout logic ---
+function logout() {
+  localStorage.removeItem("loggedIn");
+  window.location.href = "login.html";
 }
 
 // --- EMI Calculation via Flask API ---
