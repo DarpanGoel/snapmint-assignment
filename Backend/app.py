@@ -8,6 +8,7 @@ app.secret_key = "supersecretkey"
 CORS(app, supports_credentials=True, origins=[
     "http://127.0.0.1:5500",   # local server
     "https://darpangoel.github.io"  # GitHub Pages
+    "https://darpangoel.github.io/snapmint-assignment/"
 ])
 
 # --- Login ---
