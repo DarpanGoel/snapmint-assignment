@@ -32,7 +32,7 @@
 
   <script src="script.js"></script>
   <script>
-    // Redirect to login if user is not authenticated
+    // Check authentication when the page loads
     async function checkAuth() {
       try {
         const res = await fetch("http://127.0.0.1:5000/calculate", {
@@ -41,14 +41,17 @@
           body: JSON.stringify({ price: 0, rate: 0, months: 0 }),
           credentials: "include"
         });
+
         if (res.status === 401) {
+          // Not logged in → redirect to login page
           window.location.href = "login.html";
         }
       } catch (err) {
-        console.error("Error checking auth:", err);
+        console.error("Auth check error:", err);
         window.location.href = "login.html";
       }
     }
+
     checkAuth();
   </script>
 </body>
