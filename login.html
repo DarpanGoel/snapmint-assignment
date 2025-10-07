@@ -5,112 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login | Snapmint</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
-      background: #f8fff1;
-      font-family: "Poppins", sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .card {
-      background: #fff;
-      padding: 40px 50px;
-      border-radius: 16px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-      text-align: center;
-      width: 350px;
-      border-top: 5px solid #7fbf00;
-    }
-
-    h1 {
-      color: #7fbf00;
-      margin-bottom: 10px;
-      font-weight: 700;
-    }
-
-    p.subtitle {
-      color: #444;
-      font-size: 14px;
-      margin-bottom: 25px;
-    }
-
-    label {
-      display: block;
-      text-align: left;
-      margin-top: 12px;
-      margin-bottom: 6px;
-      font-weight: 500;
-      color: #333;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      outline: none;
-      transition: border 0.2s ease;
-    }
-
-    input:focus {
-      border-color: #a8e800;
-    }
-
-    button {
-      width: 100%;
-      background: #a8e800;
-      color: #1a1a1a;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      margin-top: 18px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
-      transition: background 0.2s ease;
-    }
-
-    button:hover {
-      background: #9dd800;
-    }
-
-    #message {
-      margin-top: 15px;
-      color: red;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .brand {
-      font-weight: 700;
-      color: #7fbf00;
-      letter-spacing: 0.5px;
-    }
-
-    footer {
-      position: absolute;
-      bottom: 15px;
-      font-size: 13px;
-      color: #666;
-    }
-
-    footer span {
-      color: #7fbf00;
-      font-weight: 600;
-    }
-  </style>
 </head>
-
 <body>
   <div class="card">
     <h1>Welcome Back 👋</h1>
-    <p class="subtitle">Login to access your <span class="brand">Snapmint</span> EMI Calculator</p>
+    <p class="subtitle">
+      Login to access your <span class="brand">Snapmint</span> EMI Calculator
+    </p>
 
-    <form onsubmit="event.preventDefault(); login();">
+    <form id="loginForm">
       <label for="username">Username:</label>
       <input type="text" id="username" required />
 
@@ -125,6 +28,23 @@
 
   <footer>Powered by <span>Snapmint Assignment</span></footer>
 
-  <script src="script.js"></script>
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const messageBox = document.getElementById("message");
+
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      // Simple demo login check
+      if (username === "admin" && password === "admin") {
+        localStorage.setItem("loggedIn", true);
+        window.location.href = "emi.html";
+      } else {
+        messageBox.innerText = "❌ Invalid username or password!";
+      }
+    });
+  </script>
 </body>
 </html>

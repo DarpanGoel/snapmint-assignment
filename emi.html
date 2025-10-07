@@ -5,142 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EMI Calculator | Snapmint</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
-      background: #f8fff1;
-      font-family: "Poppins", sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .navbar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: #7fbf00;
-      color: #1a1a1a;
-      padding: 12px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    }
-
-    .navbar h2 {
-      margin: 0;
-      font-size: 20px;
-      font-weight: 600;
-    }
-
-    .navbar button {
-      background: #1a1a1a;
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.2s ease;
-    }
-
-    .navbar button:hover {
-      background: #333;
-    }
-
-    .card {
-      background: #fff;
-      padding: 30px 40px;
-      border-radius: 16px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-      text-align: center;
-      width: 350px;
-      border-top: 5px solid #7fbf00;
-    }
-
-    h1 {
-      margin-bottom: 20px;
-      color: #7fbf00;
-      font-weight: 700;
-    }
-
-    label {
-      display: block;
-      text-align: left;
-      margin-top: 12px;
-      margin-bottom: 6px;
-      font-weight: 500;
-      color: #333;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      outline: none;
-      transition: border 0.2s ease;
-    }
-
-    input:focus {
-      border-color: #a8e800;
-    }
-
-    button[type="submit"] {
-      width: 100%;
-      background: #a8e800;
-      color: #1a1a1a;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      margin-top: 16px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
-      transition: background 0.2s ease;
-    }
-
-    button[type="submit"]:hover {
-      background: #9dd800;
-    }
-
-    #result {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: 600;
-      color: #1a1a1a;
-      background: #f4ffe1;
-      border: 1px solid #cfff70;
-      border-radius: 8px;
-      padding: 12px;
-      display: none;
-    }
-
-    #result.visible {
-      display: block;
-      animation: fadeIn 0.3s ease-in;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
 </head>
-
 <body>
   <div class="navbar">
     <h2>Snapmint EMI Calculator</h2>
-    <button onclick="logout()">Logout</button>
+    <button id="logoutBtn">Logout</button>
   </div>
 
   <div class="card">
     <h1>Loan EMI Calculator</h1>
-    <form onsubmit="event.preventDefault(); calculateEMI();">
+    <form id="emiForm">
       <label for="price">Loan Amount (₹):</label>
       <input type="number" id="price" required />
 
@@ -157,11 +31,14 @@
   </div>
 
   <script>
-    async function calculateEMI() {
+    const emiForm = document.getElementById("emiForm");
+    const resultBox = document.getElementById("result");
+
+    emiForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
       const price = document.getElementById("price").value;
       const rate = document.getElementById("rate").value;
       const months = document.getElementById("months").value;
-      const resultBox = document.getElementById("result");
 
       try {
         const res = await fetch("http://127.0.0.1:5000/calculate", {
@@ -182,12 +59,12 @@
         resultBox.innerText = "Error connecting to the server!";
         resultBox.classList.add("visible");
       }
-    }
+    });
 
-    function logout() {
+    document.getElementById("logoutBtn").addEventListener("click", () => {
       localStorage.removeItem("loggedIn");
       window.location.href = "login.html";
-    }
+    });
   </script>
 </body>
 </html>
