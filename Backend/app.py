@@ -1,21 +1,14 @@
-from flask import Flask, request, jsonify, session, send_from_directory
+from flask import Flask, request, jsonify, session
 from flask_cors import CORS
-import os
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
-# CORS setup to allow credentials (cookies)
-CORS(app, supports_credentials=True)
-
-# Serve static files
-@app.route('/')
-def index():
-    return send_from_directory('static', 'index.html')
-
-@app.route('/<path:filename>')
-def static_files(filename):
-    return send_from_directory('static', filename)
+# Allow credentials and multiple origins (local + GitHub Pages)
+CORS(app, supports_credentials=True, origins=[
+    "http://127.0.0.1:5500",   # local server
+    "https://darpangoel.github.io"  # GitHub Pages
+])
 
 # --- Login ---
 @app.route('/login', methods=['POST'])
@@ -24,7 +17,6 @@ def login():
     username = data.get('username')
     password = data.get('password')
 
-    # Demo credentials
     if username == "admin" and password == "password123":
         session['logged_in'] = True
         return jsonify({"success": True})
@@ -37,7 +29,7 @@ def logout():
     session.pop('logged_in', None)
     return jsonify({"success": True})
 
-# --- EMI calculation ---
+# --- EMI Calculation ---
 @app.route('/calculate', methods=['POST'])
 def calculate():
     if not session.get('logged_in'):
