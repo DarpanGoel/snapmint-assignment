@@ -27,7 +27,7 @@ def login():
         session['logged_in'] = True
         return jsonify({"success": True})
     else:
-        return jsonify({"success": False, "error": "Invalid credentials"}), 401
+        return jsonify({"success": False, "error": "❌ Invalid username or password!"}), 401
 
 # --- Logout endpoint ---
 @app.route('/logout', methods=['POST'])
